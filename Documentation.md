@@ -124,18 +124,43 @@ User
 - Country not found : System displays 'No drivers found with this nationality'
 - API downtime : System displays "Unable to retrieve data. Please try again after a little while."
 
+### Use Case 4 - Their list
+**Actor**  
+User
 
+**Preconditions**  
+- The F1 API is reachable
+- The requirements.txt has been installed
 
+**Main Flow**  
+1. User chooses option no.4
+2. User chooses out of viewing, adding or removing from their list  
+        * Viewing - Program outputs the list  
+        * Adding - User inputs the name of the driver they want to add to their list  
+        * Removing - User inputs the name of the driver they want to remove from their list
+
+**Alternative Flows**
+- Nothing to view : System displays 'No drivers found in your list. Please add a driver before trying again.'
+- Driver not found : System displays 'Driver not found. Please try again'
+- API downtime : System displays "Unable to retrieve data. Please try again after a little while."
+
+## Pseudocode
+## Flowchart
 
 ## Structure Chart
 ## IPO - input, process, output
 ## Gantt Chart  - Development  
-Start
+Start  
 ![](./images/Gantt_Chart1.png)
 End
 ![](./images/)
 
 ## Data Dictionary
+| Field | Datatype | Format for display | Description | Example | Validation |
+|----------|----------|----------| -------- | -------- | -------- |
+| Country  | object | XX...XX | Name of the country | Australia | Can be any amount of characters but must not include numbers. |
+| Talent  | float64 | NNN.NN | How many skilled people are available to work | 25.43 | Must be a decimal number to 2 decimal places. |
+| Total Score | float64 | NNN.NN | How advanced the country is in terms of AI | 33.86 | Must be a decimal number to 2 decimal places. |
 
 ## Design
 ## Development
