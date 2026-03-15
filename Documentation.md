@@ -6,18 +6,17 @@
 **User Requirements**  
 The user needs to be able to:  
 1. Search for a F1 driver by entering their name
-2. View drivers belonging to a specific team
-3. View drivers of different nationalities
+2. Filter drivers based on team or nationality
 4. View their list
 
 **Inputs and Outputs**  
 The system will accept inputs including:
 1. The name of the drivers
-2. The name of the teams
-3. The nationality of the drivers
+2. The filter - team or nationality
+2. The name of the team or country
 4. The name of the driver they either want to add or remove from their list
 
-and the corresponding outputs would be:  
+and the outputs would be:  
 1. The information on the specific driver
 2. The drivers in that team
 3. The drivers of that nationality
@@ -79,16 +78,17 @@ User
 - The requirements.txt has been installed
 
 **Main Flow**  
-1. User enters a driver's name (e.g. "Charles Leclerc")
-2. System retrieves all driver data from the API
-3. System searches for a matching driver
-4. System displays the driver's details
+1. User chooses option no.1
+2. User enters a driver's name (e.g. "Charles Leclerc")
+3. System retrieves all driver data from the API
+4. System searches for a matching driver
+5. System displays the driver's details
 
 **Alternative Flows**
-- Driver not found : System displays 'Driver not found. Please try again'
+- Driver not found : System displays 'Driver not found. Please try again.'
 - API downtime : System displays "Unable to retrieve driver data. Please try again after a little while."
 
-### Use Case 2 - View drivers belonging to a specific team
+### Use Case 2 - Filter drivers based on team or nationality
 **Actor**  
 User
 
@@ -97,16 +97,17 @@ User
 - The requirements.txt has been installed
 
 **Main Flow**  
-1. User enters a team name (e.g. "Ferrari")
-2. System retrieves all drivers from the API
-3. System filters drivers whose team matches the input
-4. System displays the list of drivers in that team
+1. User chooses option no.2
+2.  User choose a filter
+        * Country - User inputs the name of a country
+        * Team - User inputs the name of a team
 
 **Alternative Flows**
-- Team not found : System displays 'Team not found. Please try again'
+- Team not found : System displays 'Team not found. Please try again.'
+- Country not found : System displays 'Country no found. Please try again.'
 - API downtime : System displays "Unable to retrieve team data. Please try again after a little while."
 
-### Use Case 3 - View drivers of different nationalities
+### Use Case 3 - Their list
 **Actor**  
 User
 
@@ -115,25 +116,7 @@ User
 - The requirements.txt has been installed
 
 **Main Flow**  
-1. User enters a country (e.g. "Australia")
-2. System retrieves all drivers from the API
-3. System filters drivers by country name
-4. System displays all matching drivers
-
-**Alternative Flows**
-- Country not found : System displays 'No drivers found with this nationality'
-- API downtime : System displays "Unable to retrieve data. Please try again after a little while."
-
-### Use Case 4 - Their list
-**Actor**  
-User
-
-**Preconditions**  
-- The F1 API is reachable
-- The requirements.txt has been installed
-
-**Main Flow**  
-1. User chooses option no.4
+1. User chooses option no.3
 2. User chooses out of viewing, adding or removing from their list  
         * Viewing - Program outputs the list  
         * Adding - User inputs the name of the driver they want to add to their list  
@@ -141,26 +124,35 @@ User
 
 **Alternative Flows**
 - Nothing to view : System displays 'No drivers found in your list. Please add a driver before trying again.'
-- Driver not found : System displays 'Driver not found. Please try again'
+- Driver not found : System displays 'Driver not found. Please try again.'
+- Driver not found in list : System displays 'Driver not found in list. Please try again.'
 - API downtime : System displays "Unable to retrieve data. Please try again after a little while."
 
 ## Pseudocode
 ## Flowchart
 
 ## Structure Chart
+![](./images/Structure_Chart.jpeg)
+
 ## IPO - input, process, output
 ## Gantt Chart  - Development  
 Start  
-![](./images/Gantt_Chart1.png)
+![](./images/)
 End
 ![](./images/)
 
 ## Data Dictionary
 | Field | Datatype | Format for display | Description | Example | Validation |
-|----------|----------|----------| -------- | -------- | -------- |
-| Country  | object | XX...XX | Name of the country | Australia | Can be any amount of characters but must not include numbers. |
-| Talent  | float64 | NNN.NN | How many skilled people are available to work | 25.43 | Must be a decimal number to 2 decimal places. |
-| Total Score | float64 | NNN.NN | How advanced the country is in terms of AI | 33.86 | Must be a decimal number to 2 decimal places. |
+|----------|--------------|------------------------|------------------|-------------|----------------|
+| Driver Name | string | XX...XX  | The full name of the F1 driver the user searches for or adds/removes from their list | Charles Leclerc | Must contain letters and spaces only; cannot be empty |
+| Team | string | XX...XX | The team used when filtering drivers | Ferrari | Must match a valid team name from the API |
+| Country | string | XX...XX | The country used when filtering drivers | Monaco | Must contain letters only; must match API data |
+| Filter Type | string | XX...XX | Determines how the system filters drivers | team | Must be exactly “team” or “nationality” |
+| Filter Value | string | XX...XX | The team or nationality entered by the user | Ferrari | Must match API data |
+| List Action | string | XX...XX | The action the user chooses for their list | add | Must be one of the three valid options |
+| User List | list | XX...XX | The list of drivers saved by the user | Charles Leclerc | No duplicates; each entry must be a valid driver |
+| Error Message | string | XX...XX | Message displayed when an input or API issue occurs | Driver not found. | Must clearly describe the issue |
+
 
 ## Design
 ## Development
