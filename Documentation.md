@@ -85,6 +85,7 @@ User
 5. System displays the driver's details
 
 **Alternative Flows**
+- Wrong input for choosing an option : System displays 'Invalid option. Please try again.'
 - Driver not found : System displays 'Driver not found. Please try again.'
 - API downtime : System displays "Unable to retrieve driver data. Please try again after a little while."
 
@@ -103,9 +104,11 @@ User
         * Team - User inputs the name of a team
 
 **Alternative Flows**
+- Wrong input for choosing an option : System displays 'Invalid option. Please try again.'
+- Filter not found : System displays 'Invalid filter type. Please try again: '
 - Team not found : System displays 'Team not found. Please try again.'
-- Country not found : System displays 'Country no found. Please try again.'
-- API downtime : System displays "Unable to retrieve team data. Please try again after a little while."
+- Country not found : System displays 'Country not found. Please try again.'
+- API downtime : System displays "Unable to retrieve team/country data. Please try again later."
 
 ### Use Case 3 - Their list
 **Actor**  
@@ -123,38 +126,158 @@ User
         * Removing - User inputs the name of the driver they want to remove from their list
 
 **Alternative Flows**
+- Wrong input for choosing an option : System displays 'Invalid option. Please try again.'
 - Nothing to view : System displays 'No drivers found in your list. Please add a driver before trying again.'
 - Driver not found : System displays 'Driver not found. Please try again.'
 - Driver not found in list : System displays 'Driver not found in list. Please try again.'
 - API downtime : System displays "Unable to retrieve data. Please try again after a little while."
 
-## Pseudocode
-## Flowchart
+## Design
+### Pseudocode
+**Main Menu**  
+```
+BEGIN main_menu  
+        driver_list =[]  
+        SET exit = False
 
-## Structure Chart
+        WHILE exit = False
+                DISPLAY "1. Search for driver"
+                DISPLAY "2. Filter drivers"
+                DISPLAY "3. Manage your list"
+                DISPLAY "4. Exit"
+
+                GET choice
+
+                If choice = 1
+                        CALL search_driver
+                Elif choice = 2
+                        Call filter_driver
+                Elif choice ' 3
+                        CALL user_list
+                Elif choice = 4
+                        DISPLAY "Exiting F1 Menu... Thank You!"
+                        SET exit = True
+                Else
+                        DISPLAY "Invalid option. Please try again."
+                ENDIF
+        ENDWHILE
+
+END main_menu
+```
+
+**Searching for drivers**
+```
+BEGIN search_driver
+        DISPLAY "Enter the driver's name: "
+        GET name
+
+        IF name = FOUND
+                DISPLAY driver name
+                DISPLAY driver birthday
+                DISPLAY driver number
+                DISPLAY driver nationality
+                DISPLAY driver team
+        ELIF name = NOT FOUND
+                DISPLAY "Driver not found. Please try again."
+        ELSE 
+                DISPLAY "Unable to retrieve data. Please try again."
+        ENDIF
+
+END search_driver
+```
+
+**Filtering drivers**
+```
+BEGIN filter_drivers
+        DISPLAY "Do you want to filter by team or country?: "
+        Get filter type
+
+        IF 
+
+        If filter type = team
+                DISPLAY "Enter team name: "
+                GET team name
+
+                IF
+
+        ELIF filter type = country
+                DISPLAY "Enter country name: "
+                GET country name
+
+        ELSE
+                DISPLAY "Invalid filter type. Please try again: "
+```
+**Managing the user's list**
+```
+BEGIN user_list
+        DISPLAY "1. View your list"
+        DISPLAY "2. Add a driver to your list"
+        DISPLAY 3. "Remove a driver from your list"
+        GET choice
+
+        If choice = 1
+                IF user_list = empty
+                        DISPLAY "No drivers found in your list. Please add a driver before trying again."
+                ELSE
+                        DISPLAY user_list
+                ENDIF
+
+        ELIF choice = 2
+                DISPLAY "Enter the name of the driver to add: "
+                GET name
+
+                If name = not found
+                        DISPLAY "Driver not found. Please try again."
+                ELIF driver in user_list
+                        DISPLAY "The driver is already in your list."
+                ELSE
+                        ADD driver to user_list
+                        DISPLAY "The driver has been added to your list"
+                ENDIF
+
+        ELIF choice = 3
+                DISPLAY "Enter the name of the driver to remove"
+                GET name
+
+                IF name = not found
+                        DISPLAY "Driver not found. Please try again."
+                ELSE
+                        REMOVE driver from user_list
+                        DISPLAY "The driver has been removed from your list."
+                ENDIF
+        
+        ELSE 
+                DISPLAY "Invalid option. Please try again"
+        ENDIF
+
+END user_list
+```
+
+### Flowchart
+
+### Structure Chart
 ![](./images/Structure_Chart.jpeg)
 
-## IPO - input, process, output
-## Gantt Chart  - Development  
+### IPO - input, process, output
+### Gantt Chart  - Development  
 Start  
 ![](./images/)
 End
 ![](./images/)
 
-## Data Dictionary
+### Data Dictionary
 | Field | Datatype | Format for display | Description | Example | Validation |
 |----------|--------------|------------------------|------------------|-------------|----------------|
 | Driver Name | string | XX...XX  | The full name of the F1 driver the user searches for or adds/removes from their list | Charles Leclerc | Must contain letters and spaces only; cannot be empty |
 | Team | string | XX...XX | The team used when filtering drivers | Ferrari | Must match a valid team name from the API |
 | Country | string | XX...XX | The country used when filtering drivers | Monaco | Must contain letters only; must match API data |
-| Filter Type | string | XX...XX | Determines how the system filters drivers | team | Must be exactly “team” or “nationality” |
+| Filter Type | string | XX...XX | Determines how the system filters drivers | team | Must be exactly “team” or "country" |
 | Filter Value | string | XX...XX | The team or nationality entered by the user | Ferrari | Must match API data |
 | List Action | string | XX...XX | The action the user chooses for their list | add | Must be one of the three valid options |
-| User List | list | XX...XX | The list of drivers saved by the user | Charles Leclerc | No duplicates; each entry must be a valid driver |
+| User List | list | XX...XX | The list of drivers saved by the user | Charles Leclerc | No duplicates and each entry must be a valid driver |
 | Error Message | string | XX...XX | Message displayed when an input or API issue occurs | Driver not found. | Must clearly describe the issue |
 
 
-## Design
 ## Development
 ## Integration
 ## Testing and Debugging

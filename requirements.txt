@@ -1,8 +1,5 @@
-pandas
 requests 
-matplotlib
-numpy
-json
+
 
 
 #pip install -r requirements.txt
