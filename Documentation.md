@@ -1,6 +1,27 @@
 # Current F1 Drivers
 10PSE Task 1
 
+## Requirements
+### Functional Requirements
+**Data Retrieval**  
+The user must be able to view information about specific F1 drivers, team or country and thier own lists created through the program.
+
+**User Interface**  
+There has to be a way for users to search or filter information to create outputs such as a clear display clear results and a way to manage their personal lists. 
+
+**Data Display**  
+The user needs to obtain information such as thier name, age, nationality and their current team. There should also be seperate lists based on teams or nationalities of the drivers and the user's personal driver list.
+
+### Non-Functional Requirements
+**Performance**  
+The system needs to respond quickly and handle user inputs without any delays. Searching for a driver, filtering by team or nationality or updating the user's list should feel immediate so that the experience remains smooth. It should handle multiple searches without slowing down and manage the full API without errors or lags.
+
+**Reliability**  
+The systems needs to be dependable so users trust the information provided. Driver data, team lists and nationality filters must always produce accurate and consistent results and make sure to update correctly every time when the list is changed. It should also make sure the system does not crash, lose data or produce inconsistent outputs depending on the order of actions.
+
+**Usability and Accessibility**  
+The system needs to be easy and clear to navigate so users can find waht they need without confsion. Clear labels and simple menus should help users understand how to work the program and the interface hsould avoid clutter and present the results in a clean, readable format. Instructions on what to input should be brief and direct. The README.md file will present step by step instructions for users on how to use and access the system.
+
 ## Determining Specifications
 ### Functional Specifications
 **User Requirements**  
@@ -46,27 +67,6 @@ The program should have clear prompts asking users exactly what they need to typ
 
 **Reliability**  
 Potential issues may include API downtime, missing data, incorrect user inputs and duplicated data. The program shuld allow the users to try again, show a error message, and filter out unneeded extra information. 
-
-## Requirements
-### Functional Requirements
-**Data Retrieval**  
-The user must be able to view information about specific F1 drivers, team or country thier own lists created through the program.
-
-**User Interface**  
-There has to be a way for users to search or filter information, a way to trigger outputs like specific inputs, a clear display of results and a way to manage their personal lists. 
-
-**Data Display**  
-The user needs to obtain information such as thier name, age, nationality and their current team. Their should also be seperate lists based on teams or nationalities of the drivers and the user's personal driver list.
-
-### Non-Functional Requirements
-**Performance**  
-The system needs to respond quickly and handle user inputs without any delays. Searching for a driver, filtering by team or nationality or updating the user's list should feel immediate so that the experience remains smooth. It should handle multiple searches without slowing down and manage the full API without errors or lags.
-
-**Reliability**  
-The systems needs to be dependable so users trust the information provided. Driver data, team lists and nationality filters must always produce accurate and consistent results and make sure to update correctly every time when the list is changed. It should also make sure the system does not crash, lose data or produce inconsistent outputs depending on the order of actions.
-
-**Usability and Accessibility**  
-The system needs to be easy and clear to navigate so users can find waht they need without confsion. Clear labels and simple menus should help users understand how to work the program and the interface hsould avoid clutter and present the results in a clean, readable format. Instructions on what to input should be brief and direct. The README.md file will present step by step instructions for users on how to use and access the system. 
 
 ## Use Cases
 ### Use Case 1 - Search for a F1 driver by entering their name
