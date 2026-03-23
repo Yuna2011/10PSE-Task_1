@@ -4,7 +4,7 @@
 ## Requirements
 ### Functional Requirements
 **Data Retrieval**  
-The user must be able to view information about specific F1 drivers, team or country and thier own lists created through the program.
+The user must be able to view information about specific F1 drivers, team or country and their own lists created through the program.
 
 **User Interface**  
 There has to be a way for users to search or filter information to create outputs such as a clear display clear results and a way to manage their personal lists. 
@@ -20,7 +20,7 @@ The system needs to respond quickly and handle user inputs without any delays. S
 The systems needs to be dependable so users trust the information provided. Driver data, team lists and nationality filters must always produce accurate and consistent results and make sure to update correctly every time when the list is changed. It should also make sure the system does not crash, lose data or produce inconsistent outputs depending on the order of actions.
 
 **Usability and Accessibility**  
-The system needs to be easy and clear to navigate so users can find waht they need without confsion. Clear labels and simple menus should help users understand how to work the program and the interface hsould avoid clutter and present the results in a clean, readable format. Instructions on what to input should be brief and direct. The README.md file will present step by step instructions for users on how to use and access the system.
+The system needs to be easy and clear to navigate so users can find what they need without confusion. Clear labels and simple menus should help users understand how to work the program and the interface should avoid clutter and present the results in a clean, readable format. Instructions on what to input should be brief and direct. The README.md file will present step by step instructions for users on how to use and access the system.
 
 ## Determining Specifications
 ### Functional Specifications
@@ -283,4 +283,6 @@ End
 ## Testing and Debugging
 ### Student feeback - Arisa Komatsu
 ### Student feedback - Isabella Usacheva
+Yuna's code reflects both the functional and non-functional requirements well, and the response time is immediate. Requirements.txt and the README.md file are both incredibly accurate, with the README.md file being structured nicely, and clearly explains what is required to run the program. The code runs really well, with any desired options there; I didn't want to find anything that wasn't already supplied.
+
 ## Maintenance

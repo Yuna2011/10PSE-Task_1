@@ -243,7 +243,7 @@ Help Menu:
 def manage_list():
      while True:
         print("\n1. View your driver list")
-        print("2. Add a driver to you list")
+        print("2. Add a driver to your list")
         print("3. Remove a driver from your list")
         print("4. HELP!")
         print("5. Back to main menu")

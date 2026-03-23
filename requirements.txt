@@ -1,5 +1,3 @@
 requests
 pandas
 datetime
-
-#pip install -r requirements.txt
