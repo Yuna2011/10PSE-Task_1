@@ -17,7 +17,8 @@ After choosing your choice, the next screen will pop up.
 ![](./images/Step1-1.png).   
 Then again, you can type in your choice by the corresponding number. 
     - If your choice is '1', you can enter the name of your chosen driver by their first name, surname or both. No need to worry about capitalisation.    
-    An example of a proper output given would be : ![](./images/Step1-2.png). 
+    An example of a proper output given would be :  
+    ![](./images/Step1-2.png). 
     - If your choice is '2', a help output is shown.
     - If your choice is '3', you will be taken back to the main menu. 
     
@@ -55,5 +56,5 @@ To run this program, you need to install the following dependencies or modules:
 - `pandas` : To store and track interactions in a structured DataFrame 
 - `datatime` : To timestamp each interaction to record when every action happened
 
-## Dependancies
-To install the dependancies or modules, you can run : **pip install -r requirements.txt**
+## Dependencies
+To install the dependencies or modules, you can run : **pip install -r requirements.txt**

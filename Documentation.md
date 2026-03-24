@@ -100,8 +100,13 @@ User
 **Main Flow**  
 1. User chooses option no.2
 2.  User choose a filter
-        * Country - User inputs the name of a country
-        * Team - User inputs the name of a team
+        a. Team 
+                - Users can view all drivers of each team
+                - Users can choose and view drivers of a specific team
+        b. Country
+                - Users can view all drivers of each nationality
+                - Users can choose and view drivers of a specific nationality
+        
 
 **Alternative Flows**
 - Wrong input for choosing an option : System displays 'Invalid option. Please try again.'
@@ -260,10 +265,7 @@ END user_list
 
 ### IPO - input, process, output
 ### Gantt Chart  - Development  
-Start  
-![](./images/)
-End
-![](./images/)
+![](./images/Gantt_Chart.png)
 
 ### Data Dictionary
 | Field | Datatype | Format for display | Description | Example | Validation |
@@ -277,12 +279,40 @@ End
 | User List | list | XX...XX | The list of drivers saved by the user | Charles Leclerc | No duplicates and each entry must be a valid driver |
 | Error Message | string | XX...XX | Message displayed when an input or API issue occurs | Driver not found. | Must clearly describe the issue |
 
-
 ## Development
+
+
 ## Integration
+
+
 ## Testing and Debugging
 ### Student feeback - Arisa Komatsu
+Yuna's F1 API application is overall exemplary, aligning with all her functional requirements and including all features that were planned in her design stage. In terms of the outlined non-functional requirements, her program is very efficient and has fast response times within one second, and any user input errors are gracefully identified and responded to with clear error messages. Her code also allows for users to retry after any mistakes, which enhances the user experience. Additionally, her help function is specific to each feature and is very useful for navigating the program and concisely states what inputs are expected from the user. 
+
+The README file provided for her application is comprehensive and easy to understand. One improvement could be that it could be structured a little better as in 'How to run' she states how to download the program's dependencies before stating which ones are used? idk
+
+
 ### Student feedback - Isabella Usacheva
 Yuna's code reflects both the functional and non-functional requirements well, and the response time is immediate. Requirements.txt and the README.md file are both incredibly accurate, with the README.md file being structured nicely, and clearly explains what is required to run the program. The code runs really well, with any desired options there; I didn't want to find anything that wasn't already supplied.
 
 ## Maintenance
+### How would you handle issues cause by changes to the API over time?
+### How would you ensure the program remains compatible with new versions of Python and libraries
+### Describe the steps you would take to fix a bug found in the program after deployment
+### Outline how you would maintain clear documentation and ensure the program remains easy to update in the future
+
+## Final Evaluation
+### Evaluate the current functionality of the program in terms of how well it addresses the functional and non-functional requirements
+My program addresses all the functional and non-functional requirements and executes the way I expected at the start. Everything functions perfectly including the error messages, producing the correct outputs and being able to add or remove from their list. 
+
+### Discuss areas for improvement or new features that could be added.
+For areas of improvement, I would have liked it if my help functions were a little better and more advanced and maybe added to the main menu. It would also have been better if the outputs were more easier to read rather than lines of codes and had decorations or something pretty and pleasing on the side. Maybe interactive visualisations of what the drivers look like or the teams logo can be added next time so that it doesn't stay boring or bland.  
+
+Some features that could have been added include a different filter system, maybe by the driver's numbers or their nicknames. 
+
+### Evaluate how the project was managed throughout its development and maintenance, including your time management and how challenges were addressed during the software development lifecycle.
+My requirements were clear but my milestones weren't really that realistic, causing me to change some of it so that I could actually finish in the self-given time. I did have to rush some of design section to make my timeline but I had to redo them anyway after making and changing my structure chart so that everything fit together. That part was the clear bottleneck while creating the program but my code came together faster than I expected it to. 
+
+Code reviews were done continuosly but most of my code was done after 2 commits. I did add more stuff after finishing my bsae code and had to test continuously as even if one thing didn't fit, the program wouldn't output anything at all. The main challenge in my code was that I wasn't fetching the API properly and had to redo my whole search_driver function so that I was calling it without reaching the API endpoint before retreiving the information I needed. Smaller challenges included adding the pandas and datetime modules to create my Final Interaction Log as it kept on mucking up my other functions and causing them to glitch and output nothing. The Final Interaction Log also refused to produce anything at first as something was going wrong in the defining code. 
+
+Improvements when creating future projects include creating my structure chart first in my design section before anything else, have a more pleasing output program (maybe using boxes or little emojis) and add a visual representation so that it can be able to provide more excitement to the user and make them continuously use my program.  
