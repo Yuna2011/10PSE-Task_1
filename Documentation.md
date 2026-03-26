@@ -4,13 +4,13 @@
 ## Requirements
 ### Functional Requirements
 **Data Retrieval**  
-The user must be able to view information about specific F1 drivers, team or country and their own lists created through the program.
+User must be able to easily access information about F1 drivers, teams, nationalities, and their own saved driver lists. They should get quick, accurate results when searching for a specific driver or filtering by team or nationality. The system must also retreive driver data from the API reliably and structure it so it can be searched, filtered, and displayed.
 
 **User Interface**  
-There has to be a way for users to search or filter information to create outputs such as a clear display clear results and a way to manage their personal lists. 
+Users need a simple, clear interface that allows them to search, filter, and manage their lists without confusion. Menu options should be easy to understand, and results should be displayed in a clean, readable format. The interface must validate user input, handle mistakes gracefully, and prevent crashes caused by invalid entries.
 
 **Data Display**  
-The user needs to obtain information such as thier name, age, nationality and their current team. There should also be seperate lists based on teams or nationalities of the drivers and the user's personal driver list.
+The user needs to obtain information such as thier name, age, nationality and their current team. There should also be seperate lists based on teams or nationalities of the drivers and the user's personal driver list. Developers must format and present data clearly, ensuring consistency across all outputs. The system must support multiple display formats without errors. 
 
 ### Non-Functional Requirements
 **Performance**  
@@ -59,14 +59,13 @@ My system must handle unidentified wrong inputs or errors in the API URL. This i
 
 ### Non-Functional Specifications
 **Performance**    
-My program should respond quickly enough so that the users dont feel the system lagging. The responses should be efficient and be kept under a second at best to maintain user engagement. 
+My program should respond quickly enough so that the users dont feel the system lagging. The responses should be efficient and be kept under a second at best to maintain user engagement. The system should also be able to handle repeated searches, multiple filters and continuous navigation through menus without slowing down. 
 
 **Useability/Accessibility**    
-The program should have clear prompts asking users exactly what they need to type, consistent formatting with clearn readable outputs with spacing, indentation and lables and also helpful error messages to show when the wrong inputs were put in. 
-(users whouldnt need to type exact names, shortcuts)
+The program should have clear prompts asking users exactly what they need to type, consistent formatting with clearn readable outputs with spacing, indentation and lables and also helpful error messages to show when the wrong inputs were put in. Users should also not need to type exact names or perfect spelling. 
 
 **Reliability**  
-Potential issues may include API downtime, missing data, incorrect user inputs and duplicated data. The program shuld allow the users to try again, show a error message, and filter out unneeded extra information. 
+Potential issues may include API downtime, missing data, incorrect user inputs and duplicated data. The program shuld allow the users to try again, show a error message, and filter out unneeded extra information. Filtering and searching must always return accurate and consistent results, and the user’s personal list should update correctly every time an item is added or removed. The system should also avoid displaying unnecessary or irrelevant information.
 
 ## Use Cases
 ### Use Case 1 - Search for a F1 driver by entering their name
@@ -142,51 +141,122 @@ User
 **Main Menu**  
 ```
 BEGIN main_menu  
-        driver_list =[]  
-        SET exit = False
-
-        WHILE exit = False
-                DISPLAY "1. Search for driver"
-                DISPLAY "2. Filter drivers"
+        
+        LOOP forever
+                DISPLAY "1. Search Driver"
+                DISPLAY "2. Filter Drivers"
                 DISPLAY "3. Manage your list"
                 DISPLAY "4. Exit"
+                GET user choice
 
-                GET choice
+                IF choice = 1 THEN
+                        LOOP
+                                DISPLAY "1. Search for a driver"
+                                DISPLAY "2. HELP!"
+                                DISPLAY "3. Back to main menu"
+                                GET submenu choice
 
-                If choice = 1
-                        CALL search_driver
-                Elif choice = 2
-                        Call filter_driver
-                Elif choice ' 3
-                        CALL user_list
-                Elif choice = 4
-                        DISPLAY "Exiting F1 Menu... Thank You!"
-                        SET exit = True
-                Else
-                        DISPLAY "Invalid option. Please try again."
-                ENDIF
-        ENDWHILE
+                                IF submenu choice = 1 THEN
+                                        ASK user for driver name
+                                        CALL search_driver
+                                        IF driver found THEN
+                                                DISPLAY driver details
+                                        ENDIF
+                                
+                                ELSE IF submenu choice = 2 THEN
+                                        DISPLAY help information
+
+                                ELSE IF submenu choice = 3 THEN
+                                        EXIT submenu loop
+
+                                ELSE
+                                        DISPLAY "Invalid choice"
+                                ENDIF
+                        END LOOP
+                
+                ELSE IF choice = 2 THEN
+                        CALL filter_drivers
+
+                ELSE IF choice = 3 THEN
+                        CALL manage_list
+
+                ELSE IF choice = 4 THEN
+                        DISPLAY interaction log
+                        DISPLAY exit message
+                        EXIT main loop
+
+                ELSE
+                        DISPLAY "Invalid choice"
+                ENDIF 
+        
+        END LOOP
 
 END main_menu
+```
+**Log Interaction**
+```
+BEGIN log_interaction(action, user_input, result)
+
+        ACCESS the global interaction log
+
+        CREATE a new log entry containing:
+                - the current time
+                - the action performed
+                - the user input
+                - the result of the action
+
+        ADD the new entry to the interaction log DataFrame
+                
+END log_interaction
+```
+
+**Get log**
+```
+BEGIN get_log
+
+        RETURN the interaction log
+
+END get_log
 ```
 
 **Searching for drivers**
 ```
 BEGIN search_driver
-        DISPLAY "Enter the driver's name: "
-        GET name
+        
+        SEND a request to the API URL
 
-        IF name = FOUND
-                DISPLAY driver name
-                DISPLAY driver birthday
-                DISPLAY driver number
-                DISPLAY driver nationality
-                DISPLAY driver team
-        ELIF name = NOT FOUND
-                DISPLAY "Driver not found. Please try again."
-        ELSE 
-                DISPLAY "Unable to retrieve data. Please try again."
+        If the API response is not successful THEN
+                DISPLAY error message
+                RETURN None
         ENDIF
+
+        GET the list of drivers from the API response
+        CONVERT the user's input name to lowercase and remove extra spaces
+
+        FOR each driver in the list of drivers
+                GET the driver's first name in lowercase
+                GET the driver's last name in lowercase
+                COMBINE them into a full name
+
+                IF the user input matches the first name
+                        OR matches the last name
+                        OR matches the full name 
+
+                        LOG the interaction as "found"
+
+                        RETURN a dictionary containing:
+                        - driver's name
+                        - driver's surname
+                        - driver's birthday
+                        - driver's number
+                        - driver's team
+                        - driver's nationality
+                ENDIF
+        END FOR
+
+        DISPLAY message the the driver was not found
+        LOG the interaction as "not found"
+        RETURN None
 
 END search_driver
 ```
@@ -194,76 +264,228 @@ END search_driver
 **Filtering drivers**
 ```
 BEGIN filter_drivers
-        DISPLAY "Do you want to filter by team or country?: "
-        Get filter type
 
-        IF 
+    LOOP forever
+        DISPLAY "1. Sort by teams"
+        DISPLAY "2. Sort by nationality"
+        DISPLAY "3. HELP!"
+        DISPLAY "4. Back to main menu"
+        GET user choice
 
-        If filter type = team
-                DISPLAY "Enter team name: "
-                GET team name
+        IF choice = "1" THEN      // Sort by teams
 
-                IF
+            LOOP
+                DISPLAY "1. All teams"
+                DISPLAY "2. A specific team"
+                DISPLAY "3. Back to main menu"
+                GET team choice
 
-        ELIF filter type = country
-                DISPLAY "Enter country name: "
-                GET country name
+                IF team choice = "1" THEN
+                    SEND request to API
+                    IF request fails THEN
+                        DISPLAY error
+                        EXIT submenu
+                    ENDIF
+
+                    GET list of drivers
+                    CREATE empty dictionary "teams"
+
+                    FOR each driver DO
+                        GET driver's team
+                        IF team not in dictionary THEN
+                            CREATE new list for that team
+                        ENDIF
+                        ADD driver to that team list
+                    END FOR
+
+                    DISPLAY all teams and their drivers
+                    LOG interaction
+                    EXIT submenu
+
+                ELSE IF team choice = "2" THEN
+                    ASK user for team name
+
+                    SEND request to API
+                    IF request fails THEN
+                        DISPLAY error
+                        EXIT submenu
+                    ENDIF
+
+                    GET list of drivers
+                    CREATE list of drivers matching the team
+
+                    IF list not empty THEN
+                        DISPLAY drivers in that team
+                        LOG interaction
+                    ELSE
+                        DISPLAY "team not found"
+                        LOG interaction
+                    ENDIF
+
+                    EXIT submenu
+
+                ELSE IF team choice = "3" THEN
+                    RETURN to main menu
+
+                ELSE
+                    DISPLAY "Invalid choice"
+                ENDIF
+
+            END LOOP
+
+
+        ELSE IF choice = "2" THEN      // Sort by nationality
+
+            DISPLAY "1. All nationalities"
+            DISPLAY "2. A specific nationality"
+            DISPLAY "3. Back to main menu"
+            GET nationality choice
+
+            IF nationality choice = "1" THEN
+                SEND request to API
+                IF request fails THEN
+                    DISPLAY error
+                    EXIT loop
+                ENDIF
+
+                GET list of drivers
+                CREATE empty dictionary "countries"
+
+                FOR each driver DO
+                    GET driver's nationality
+                    IF nationality not in dictionary THEN
+                        CREATE new list
+                    ENDIF
+                    ADD driver to that nationality list
+                END FOR
+
+                DISPLAY all nationalities and their drivers
+                LOG interaction
+
+            ELSE IF nationality choice = "2" THEN
+                ASK user for nationality
+
+                SEND request to API
+                IF request fails THEN
+                    DISPLAY error
+                    EXIT loop
+                ENDIF
+
+                GET list of drivers
+                CREATE list of drivers matching nationality
+
+                IF list not empty THEN
+                    DISPLAY drivers from that nationality
+                    LOG interaction
+                ELSE
+                    DISPLAY "no drivers found"
+                    LOG interaction
+                ENDIF
+
+            ELSE IF nationality choice = "3" THEN
+                EXIT nationality submenu
+
+            ELSE
+                DISPLAY "Invalid choice"
+            ENDIF
+
+
+        ELSE IF choice = "3" THEN
+            DISPLAY help information
+
+        ELSE IF choice = "4" THEN
+            RETURN
 
         ELSE
-                DISPLAY "Invalid filter type. Please try again: "
+            DISPLAY "Invalid choice"
+        ENDIF
+
+    END LOOP
+
+END filter_drivers
+
 ```
 **Managing the user's list**
 ```
-BEGIN user_list
-        DISPLAY "1. View your list"
+BEGIN manage_list
+
+    LOOP forever
+        DISPLAY "1. View your driver list"
         DISPLAY "2. Add a driver to your list"
-        DISPLAY 3. "Remove a driver from your list"
-        GET choice
+        DISPLAY "3. Remove a driver from your list"
+        DISPLAY "4. HELP!"
+        DISPLAY "5. Back to main menu"
+        GET user choice
 
-        If choice = 1
-                IF user_list = empty
-                        DISPLAY "No drivers found in your list. Please add a driver before trying again."
-                ELSE
-                        DISPLAY user_list
-                ENDIF
+        IF choice = "1" THEN
+            IF driver_list is not empty THEN
+                FOR each driver in driver_list DO
+                    DISPLAY driver details
+                END FOR
+            ELSE
+                DISPLAY "Your driver list is empty."
+            ENDIF
 
-        ELIF choice = 2
-                DISPLAY "Enter the name of the driver to add: "
-                GET name
+        ELSE IF choice = "2" THEN
+            ASK user for driver name
+            CALL search_driver
+            IF driver found THEN
+                ADD driver to driver_list
+                DISPLAY confirmation message
+                LOG interaction
+            ELSE
+                DISPLAY "Driver not found"
+                LOG interaction
+            ENDIF
 
-                If name = not found
-                        DISPLAY "Driver not found. Please try again."
-                ELIF driver in user_list
-                        DISPLAY "The driver is already in your list."
-                ELSE
-                        ADD driver to user_list
-                        DISPLAY "The driver has been added to your list"
-                ENDIF
+        ELSE IF choice = "3" THEN
+            ASK user for driver name to remove
+            IF driver exists in driver_list THEN
+                REMOVE driver from driver_list
+                DISPLAY confirmation message
+                LOG interaction
+            ELSE
+                DISPLAY "Driver not found in your list"
+                LOG interaction
+            ENDIF
 
-        ELIF choice = 3
-                DISPLAY "Enter the name of the driver to remove"
-                GET name
+        ELSE IF choice = "4" THEN
+            DISPLAY help information
 
-                IF name = not found
-                        DISPLAY "Driver not found. Please try again."
-                ELSE
-                        REMOVE driver from user_list
-                        DISPLAY "The driver has been removed from your list."
-                ENDIF
-        
-        ELSE 
-                DISPLAY "Invalid option. Please try again"
+        ELSE IF choice = "5" THEN
+            EXIT loop
+
+        ELSE
+            DISPLAY "Invalid choice"
         ENDIF
 
-END user_list
+    END LOOP
+
+END manage_list
 ```
 
-### Flowchart
+### Flowchart 
+**Main Menu**  
+![](./images/Main_Menu_F.jpeg)
+
+**Log Interaction**  
+![](./images/Log_Interaction.jpeg)
+
+**Get Log**  
+![](./images/Get_Log.jpeg)
+
+**Searching for Driver**
+![](./images/Search_Driver.jpeg)
+
+**Filtering Drivers**  
+![](./images/Filter_Drivers.jpeg)
+
+**Managing the user's list**  
+![](./images/Manage_List.jpeg)
 
 ### Structure Chart
 ![](./images/Structure_Chart.jpeg)
 
-### IPO - input, process, output
 ### Gantt Chart  - Development  
 ![](./images/Gantt_Chart.png)
 
@@ -280,10 +502,187 @@ END user_list
 | Error Message | string | XX...XX | Message displayed when an input or API issue occurs | Driver not found. | Must clearly describe the issue |
 
 ## Development
+**main.py**
+```
+from functions import*
 
+def main():
+    while True:
+        print("F1 Menu:")
+        print("1. Search Driver")
+        print("2. Filter Drivers")
+        print("3. Manage your list")
+        print("4. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            name = input("\nEnter driver name: ")
+            driver = search_driver(name)
+            if driver:  # driver was found
+                max_key_len = max(len(k) for k in driver)
+                for key, value in driver.items():
+                    print(f"{key:<{max_key_len}} : {value}")
+        elif choice == "2":
+            filter_drivers()
+        elif choice == "3":
+            manage_list()
+        elif choice == "4":
+            print("Exiting driver list.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
+```
+![](./images/Main_Menu_Development.png)
+
+**functions.py**
+```
+import requests 
+global name
+
+# Dictionary to store drivers
+driver_list = {}
+
+def search_driver(name):
+    if not name.strip():
+        print("Invalid name.")
+        return None
+
+    print(f"\nSearching for driver '{name}'...")
+    print("Driver found.")
+
+    return {
+        "name": "Name",
+        "surname": "Surname",
+        "birthday": "0000-00-00",
+        "number": 99,
+        "team": "Team_Name",
+        "nationality": "Country_Name"
+    }
+```
+![](./images/Search_Driver_Development.png)
+```
+
+def filter_drivers():
+    while True:
+        print("What filter would you like to use?")
+        print("1. Sort by teams ")
+        print("2. Sort by nationality")
+        print("3. Back to main menu")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            print("\nTeam Filter Options:")
+            print("1. View all teams")
+            print("2. View a specific team")
+            print("3. Back")
+            team_choice = input("Choose an option: ")
+
+            if team_choice == "1":
+                print("\nShowing all teams.")
+
+            elif team_choice == "2":
+                team = input("Enter team name: ")
+                print(f"\nShowing drivers from team '{team}'.")
+
+            elif team_choice == "3":
+                return
+
+            else:
+                print("Invalid choice.")
+
+        elif choice == "2":
+            print("\nNationality Filter Options:")
+            print("1. View all nationalities")
+            print("2. View a specific nationality")
+            print("3. Back")
+            nat_choice = input("Choose an option: ")
+
+            if nat_choice == "1":
+                print("\nShowing all nationalities.")
+
+            elif nat_choice == "2":
+                nationality = input("Enter nationality: ")
+                print(f"\nShowing drivers from nationality '{nationality}'.")
+
+            elif nat_choice == "3":
+                return
+
+            else:
+                print("Invalid choice.")
+
+        elif choice == "3":
+            return
+
+        else:
+            print("Invalid choice. Please try again.")
+```
+![](./images/Filter_Menu_Team_Development.png)
+![](./images/Filter_Menu_Country_Development.png)
+```
+
+def manage_list():
+     while True:
+        print("1. View your driver list")
+        print("2. Add a driver to you list")
+        print("3. Remove a driver from your list")
+        print("4. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            print("\nYour driver list:")
+            if driver_list:
+                print(", ".join(driver_list.keys()))
+            else:
+                print("Your driver list is empty.")
+
+        elif choice == "2":
+            name = input("Enter driver name to add: ")
+            driver = search_driver(name)
+            if driver:
+                driver_list[name.title()] = driver
+                print("Driver added.")
+
+        elif choice == "3":
+            name = input("Enter driver name to remove: ")
+            if name.title() in driver_list:
+                del driver_list[name.title()]
+                print("Driver removed.")
+            else:
+                print("Driver not found in list.")
+
+        elif choice == "4":
+            return
+
+        else:
+            print("Invalid choice. Please try again.")
+```
+![](./images/Manage_List_Development.png)
+
+**Evaluation**  
+Everything basic works in my program and nothing is producing any errors. At first, I included my API but decided to take it out and work on my basic code before making any more progress. From my first try, I improved everything including the fact that now the program works when before it didn't. 
 
 ## Integration
+**Main Menu**  
+![](./images/Main_Menu.png)  
 
+**Search for Drivers**  
+![](./images/Search_Driver.png)
+
+**Filtering the Drivers**  
+![](./images/Filter_Menu_1png)
+![](./images/Filter_Menu_2.png)
+![](./images/Filter_Menu_3.png)
+![](./images/Filter_Menu_4.png)
+![](./images/Filter_Menu_5.png)
+
+**Managing thier Lists**  
+![](./images/Manage_List.png)
+
+**Evaluation**  
+After adding the API, everything worked smoothly wihtout a problem and also produced the error outputs. Some improvements that I want to add are logs, which can record every action the user does and produces it at when they exit the program. 
 
 ## Testing and Debugging
 ### Student feeback - Arisa Komatsu
@@ -296,16 +695,29 @@ Yuna's code reflects both the functional and non-functional requirements well, a
 
 ## Maintenance
 ### How would you handle issues cause by changes to the API over time?
+If the API changes in the future, the first step would be to check the updated API to understand what had been modified. Sometimes, the API might changes the names of fields, remove certain data or restructure how the information is returned. Since the program relies heavily on fields like name, surname, etc, any changes to htese would affect how the functions work. To handle this, I would update the search_driver and filter_drivers functions so they match the new structure of the API. I would also keep the error messages in place so the program can warn the user when the API is unavailable or returning unexpected data instead of crashing.
+
+In addition, I would make sure the code stays easy to update. Because my API code is not directly mixed into the main menu, I only need to update on part of the code instead of the entire system. Logging API errors through the interaction log would also help identify when the API is down or behaving differently. This makes it easier to spot patterns and fix problems quickly. 
+
 ### How would you ensure the program remains compatible with new versions of Python and libraries
+To keep my program compatible with new versions of python and the modules used the program, I would test the program using the updated programs over time. This allows me to see whether any functions have been removed, renamed or changed. If a module were to update, I could adjust the code to use the new recommended functions or syntax. 
+
+I would also check for major updates, especially for my modules that the program depends on heavily. For example, if requests changes how the HTTP responses are handled or if pandas changes how dataframes work, I would update the relevant parts of the program. 
+
 ### Describe the steps you would take to fix a bug found in the program after deployment
+If a bug appears after the program has been deployed, the first step would be to reproduce the issue so I can see exactly when and how it happens. Once I understand the conditions that caused the bug, I would look at the specific function repsonsible. For example, serach_driver if the issue involves searching or manage_list if the program is with adding or removing drivers. The interaction log would also be helpful because it records the user's actions and the program's reponses, making it easier to trace what went wrong. 
+
+After identifying the cause of the bug, I would fix the code and test it with different inputs, including invalid inputs. This ensures the fix works in all situations. Once the bug is resolved, I would update the README.md to reflect any changes made to the program. 
+
 ### Outline how you would maintain clear documentation and ensure the program remains easy to update in the future
+To keep the program easy to maintain, I would make sure the README.md file stays updated with clear instructions on how to run the program, instal dependancies and understand each feature. Whenever new features are added or existing ones are changed, I would update the documentation so it always reflects the current version of the program. Keeping the code organised would also help future fixes to be done quickly. I would also write short explanations inside the code to describe what each function does, what inputs it expects and what outputs it returns. 
 
 ## Final Evaluation
 ### Evaluate the current functionality of the program in terms of how well it addresses the functional and non-functional requirements
 My program successfully addresses all the functional and non-functional requirements I established at the start. It retrieves accurate information about the F1 drivers, teams and nationalities and allows users to create, update and manage their own lists without errors. The system handles API calls correctly, displays clear error messages when something goes wrong and responds quickly to user inputs. All features such as filtering, searching and list management produce the expected outputs and operate consistently. Overall, my program behaves exactly as intended and matches the goals that I had set at the start of the project.
 
 ### Discuss areas for improvement or new features that could be added.
-Although the program is fully functional, there are several areas of improvement that could enhance user experience and extend the functionality of my program. The help functions could have been more deatiled and advanced and integrated into the program so that you could open it whenever you want. It would also have been better is I were to improve the visual representation of the output such as adding borders, spacing or other elements like emojis. This would make the interface more engaging and easier to read. Incorporating visualisations of different elements like team logos and driver images could also make the program feel more dynamic and less text-heavy, boring and bland to read. 
+Although the program is fully functional, there are several areas of improvement that could enhance user experience and extend the functionality of my program. The help functions could have been more deatiled and advanced and integrated into the program so that you could open it whenever you want. It would also have been better is I were to improve the visual representation of the output such as adding borders, spacing or other elements like emojis. This would make the interface more engaging and easier to read. Incorporating visualisations of different elements like team logos and driver images could also make the program feel more dynamic and less text-heavy, boring and bland to read. From my peer feedback, I could add more information and better plan out my README. md file.
 
 Some new features that could have been added include expanding the filtering system to give more flexibility. Allowing searches by driver numbers or nicknames would deepen the user's ability of explore the dataset even more. Sorting options such as alphabetical order or age could also improve navigation throughout the program. 
 
